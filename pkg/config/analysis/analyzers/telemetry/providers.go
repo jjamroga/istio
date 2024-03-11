@@ -21,6 +21,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 type ProdiverAnalyzer struct{}
@@ -35,6 +36,9 @@ func (a *ProdiverAnalyzer) Metadata() analysis.Metadata {
 		Inputs: []config.GroupVersionKind{
 			gvk.Telemetry,
 			gvk.MeshConfig,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.InvalidTelemetryProvider,
 		},
 	}
 }

@@ -54,6 +54,10 @@ func (a *ValidationAnalyzer) Metadata() analysis.Metadata {
 		Name:        "schema.ValidationAnalyzer." + a.s.Kind(),
 		Description: "Runs schema validation as an analyzer on '" + a.s.Kind() + "' resources",
 		Inputs:      []config.GroupVersionKind{a.s.GroupVersionKind()},
+		MessageTypes: []*diag.MessageType{
+			msg.VirtualServiceUnreachableRule,
+			msg.VirtualServiceIneffectiveMatch,
+		},
 	}
 }
 

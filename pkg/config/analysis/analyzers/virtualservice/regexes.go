@@ -25,6 +25,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // RegexAnalyzer checks all regexes in a virtual service
@@ -39,6 +40,9 @@ func (a *RegexAnalyzer) Metadata() analysis.Metadata {
 		Description: "Checks regex syntax",
 		Inputs: []config.GroupVersionKind{
 			gvk.VirtualService,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.InvalidRegexp,
 		},
 	}
 }

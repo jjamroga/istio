@@ -27,6 +27,7 @@ import (
 	"istio.io/istio/pkg/config/constants"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // AlphaAnalyzer checks for alpha Istio annotations in K8s resources
@@ -48,6 +49,9 @@ func (*AlphaAnalyzer) Metadata() analysis.Metadata {
 			gvk.Service,
 			gvk.Pod,
 			gvk.Deployment,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.AlphaAnnotation,
 		},
 	}
 }

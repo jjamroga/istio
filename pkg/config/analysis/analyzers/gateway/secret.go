@@ -29,6 +29,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // SecretAnalyzer checks a gateway's referenced secrets for correctness
@@ -45,6 +46,10 @@ func (a *SecretAnalyzer) Metadata() analysis.Metadata {
 			gvk.Gateway,
 			gvk.Pod,
 			gvk.Secret,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.ReferencedResourceNotFound,
+			msg.InvalidGatewayCredential,
 		},
 	}
 }

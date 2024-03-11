@@ -24,6 +24,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // DestinationHostAnalyzer checks the destination hosts associated with each virtual service
@@ -45,6 +46,11 @@ func (a *DestinationHostAnalyzer) Metadata() analysis.Metadata {
 			gvk.ServiceEntry,
 			gvk.VirtualService,
 			gvk.Service,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.IngressRouteRulesNotAffected,
+			msg.ReferencedResourceNotFound,
+			msg.VirtualServiceDestinationPortSelectorRequired,
 		},
 	}
 }

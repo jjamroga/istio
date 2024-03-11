@@ -20,6 +20,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // DefaultSelectorAnalyzer validates, per namespace, that there aren't multiple
@@ -37,6 +38,9 @@ func (a *DefaultSelectorAnalyzer) Metadata() analysis.Metadata {
 		Description: "Validates that there aren't multiple sidecar resources that have no selector",
 		Inputs: []config.GroupVersionKind{
 			gvk.Sidecar,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.MultipleSidecarsWithoutWorkloadSelectors,
 		},
 	}
 }

@@ -24,6 +24,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // CaCertificateAnalyzer checks if CaCertificate is set in case mode is SIMPLE/MUTUAL
@@ -37,6 +38,10 @@ func (c *CaCertificateAnalyzer) Metadata() analysis.Metadata {
 		Description: "Checks if caCertificates is set when TLS mode is SIMPLE/MUTUAL",
 		Inputs: []config.GroupVersionKind{
 			gvk.DestinationRule,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.NoServerCertificateVerificationDestinationLevel,
+			msg.NoServerCertificateVerificationPortLevel,
 		},
 	}
 }

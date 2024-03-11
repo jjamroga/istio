@@ -25,6 +25,7 @@ import (
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
 	"istio.io/istio/pkg/util/sets"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 type LightstepAnalyzer struct{}
@@ -39,6 +40,9 @@ func (a *LightstepAnalyzer) Metadata() analysis.Metadata {
 		Inputs: []config.GroupVersionKind{
 			gvk.Telemetry,
 			gvk.MeshConfig,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.Deprecated,
 		},
 	}
 }

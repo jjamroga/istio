@@ -28,6 +28,7 @@ import (
 	"istio.io/istio/pkg/config/constants"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 type ServiceAssociationAnalyzer struct{}
@@ -55,6 +56,10 @@ func (s *ServiceAssociationAnalyzer) Metadata() analysis.Metadata {
 			gvk.Service,
 			gvk.Deployment,
 			gvk.Namespace,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.DeploymentAssociatedToMultipleServices,
+			msg.DeploymentConflictingPorts,
 		},
 	}
 }

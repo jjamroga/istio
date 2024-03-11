@@ -29,6 +29,7 @@ import (
 	"istio.io/istio/pkg/config/host"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // ConflictingGatewayAnalyzer checks a gateway's selector, port number and hosts.
@@ -44,6 +45,10 @@ func (*ConflictingGatewayAnalyzer) Metadata() analysis.Metadata {
 		Description: "Checks a gateway's selector, port number and hosts",
 		Inputs: []config.GroupVersionKind{
 			gvk.Gateway,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.ReferencedResourceNotFound,
+			msg.ConflictingGateways,
 		},
 	}
 }

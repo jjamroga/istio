@@ -28,6 +28,7 @@ import (
 	"istio.io/istio/pkg/config/schema/gvk"
 	"istio.io/istio/pkg/kube/inject"
 	"istio.io/istio/pkg/slices"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // K8sAnalyzer checks for misplaced and invalid Istio annotations in K8s resources
@@ -45,6 +46,12 @@ func (*K8sAnalyzer) Metadata() analysis.Metadata {
 			gvk.Service,
 			gvk.Pod,
 			gvk.Deployment,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.UnknownAnnotation,
+			msg.DeprecatedAnnotation,
+			msg.MisplacedAnnotation,
+			msg.InvalidAnnotation,
 		},
 	}
 }

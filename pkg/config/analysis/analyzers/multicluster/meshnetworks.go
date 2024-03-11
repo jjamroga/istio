@@ -28,6 +28,7 @@ import (
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
 	"istio.io/istio/pkg/kube/multicluster"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // MeshNetworksAnalyzer validates MeshNetworks configuration in multi-cluster.
@@ -50,6 +51,9 @@ func (s *MeshNetworksAnalyzer) Metadata() analysis.Metadata {
 		Inputs: []config.GroupVersionKind{
 			gvk.MeshNetworks,
 			gvk.Secret,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.UnknownMeshNetworksServiceRegistry,
 		},
 	}
 }

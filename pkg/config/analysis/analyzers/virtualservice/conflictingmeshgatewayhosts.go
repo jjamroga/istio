@@ -27,6 +27,7 @@ import (
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
 	"istio.io/istio/pkg/util/sets"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // ConflictingMeshGatewayHostsAnalyzer checks if multiple virtual services
@@ -43,6 +44,9 @@ func (c *ConflictingMeshGatewayHostsAnalyzer) Metadata() analysis.Metadata {
 		Description: "Checks if multiple virtual services associated with the mesh gateway have conflicting hosts",
 		Inputs: []config.GroupVersionKind{
 			gvk.VirtualService,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.ConflictingMeshGatewayVirtualServiceHosts,
 		},
 	}
 }

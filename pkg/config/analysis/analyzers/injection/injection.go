@@ -31,6 +31,7 @@ import (
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
 	"istio.io/istio/pkg/slices"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // Analyzer checks conditions related to Istio sidecar injection.
@@ -54,6 +55,12 @@ func (a *Analyzer) Metadata() analysis.Metadata {
 			gvk.Namespace,
 			gvk.Pod,
 			gvk.ConfigMap,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.NamespaceMultipleInjectionLabels,
+			msg.NamespaceInjectionEnabledByDefault,
+			msg.NamespaceNotInjected,
+			msg.PodMissingProxy,
 		},
 	}
 }

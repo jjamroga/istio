@@ -24,6 +24,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // EnvoyPatchAnalyzer checks envoyFilters to see if the patch section is okay
@@ -39,6 +40,10 @@ func (*EnvoyPatchAnalyzer) Metadata() analysis.Metadata {
 		Description: "Checks an envoyFilters ",
 		Inputs: []config.GroupVersionKind{
 			gvk.EnvoyFilter,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.EnvoyFilterUsesRelativeOperation,
+			msg.EnvoyFilterUsesRelativeOperationWithProxyVersion,
 		},
 	}
 }

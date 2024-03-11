@@ -27,6 +27,7 @@ import (
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
 	"istio.io/istio/pkg/jwt"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 type JWTClaimRouteAnalyzer struct{}
@@ -43,6 +44,9 @@ func (s *JWTClaimRouteAnalyzer) Metadata() analysis.Metadata {
 			gvk.RequestAuthentication,
 			gvk.Gateway,
 			gvk.Pod,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.JwtClaimBasedRoutingWithoutRequestAuthN,
 		},
 	}
 }

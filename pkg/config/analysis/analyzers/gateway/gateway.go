@@ -27,6 +27,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // IngressGatewayPortAnalyzer checks a gateway's ports against the gateway's Kubernetes service ports.
@@ -44,6 +45,10 @@ func (*IngressGatewayPortAnalyzer) Metadata() analysis.Metadata {
 			gvk.Gateway,
 			gvk.Pod,
 			gvk.Service,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.ReferencedResourceNotFound,
+			msg.GatewayPortNotDefinedOnService,
 		},
 	}
 }

@@ -25,6 +25,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 type ProtocolAddressesAnalyzer struct{}
@@ -38,6 +39,9 @@ func (serviceEntry *ProtocolAddressesAnalyzer) Metadata() analysis.Metadata {
 		Inputs: []config.GroupVersionKind{
 			gvk.ServiceEntry,
 			gvk.MeshConfig,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.ServiceEntryAddressesRequired,
 		},
 	}
 }

@@ -29,6 +29,7 @@ import (
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
 	"istio.io/istio/pkg/util/sets"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 type Analyzer struct {
@@ -44,6 +45,9 @@ func (a *Analyzer) Metadata() analysis.Metadata {
 		Inputs: []config.GroupVersionKind{
 			gvk.MutatingWebhookConfiguration,
 			gvk.Service,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.InvalidWebhook,
 		},
 	}
 }

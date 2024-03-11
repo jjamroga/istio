@@ -26,6 +26,7 @@ import (
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
 	"istio.io/istio/pkg/slices"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 type ExternalControlPlaneAnalyzer struct{}
@@ -41,6 +42,10 @@ func (s *ExternalControlPlaneAnalyzer) Metadata() analysis.Metadata {
 		Inputs: []config.GroupVersionKind{
 			gvk.ValidatingWebhookConfiguration,
 			gvk.MutatingWebhookConfiguration,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.ExternalControlPlaneAddressIsNotAHostname,
+			msg.InvalidExternalControlPlaneConfig,
 		},
 	}
 }

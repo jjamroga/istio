@@ -25,6 +25,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // FieldAnalyzer checks for deprecated Istio types and fields
@@ -66,6 +67,9 @@ func (*FieldAnalyzer) Metadata() analysis.Metadata {
 		Name:        "deprecation.DeprecationAnalyzer",
 		Description: "Checks for deprecated Istio types and fields",
 		Inputs:      deprecationInputs,
+		MessageTypes: []*diag.MessageType{
+			msg.Deprecated,
+		},
 	}
 }
 

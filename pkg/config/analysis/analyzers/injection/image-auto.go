@@ -28,6 +28,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // ImageAutoAnalyzer reports an error if Pods and Deployments with `image: auto` are not going to be injected.
@@ -50,6 +51,10 @@ func (a *ImageAutoAnalyzer) Metadata() analysis.Metadata {
 			gvk.Pod,
 			gvk.Deployment,
 			gvk.MutatingWebhookConfiguration,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.ImageAutoWithoutInjectionError,
+			msg.ImageAutoWithoutInjectionWarning,
 		},
 	}
 }

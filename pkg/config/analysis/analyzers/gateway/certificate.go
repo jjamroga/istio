@@ -23,6 +23,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 type CertificateAnalyzer struct{}
@@ -35,6 +36,9 @@ func (*CertificateAnalyzer) Metadata() analysis.Metadata {
 		Description: "Checks a gateway certificate",
 		Inputs: []config.GroupVersionKind{
 			gvk.Gateway,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.GatewayDuplicateCertificate,
 		},
 	}
 }

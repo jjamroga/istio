@@ -28,6 +28,7 @@ import (
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
 	"istio.io/istio/pkg/slices"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // ImageAnalyzer checks the image of auto-injection configured with the running proxies on pods.
@@ -59,6 +60,9 @@ func (a *ImageAnalyzer) Metadata() analysis.Metadata {
 			gvk.Namespace,
 			gvk.Pod,
 			gvk.ConfigMap,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.PodsIstioProxyImageMismatchInNamespace,
 		},
 	}
 }

@@ -25,6 +25,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // SelectorAnalyzer validates, per namespace, that:
@@ -43,6 +44,10 @@ func (a *SelectorAnalyzer) Metadata() analysis.Metadata {
 		Inputs: []config.GroupVersionKind{
 			gvk.Sidecar,
 			gvk.Pod,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.ReferencedResourceNotFound,
+			msg.ConflictingSidecarWorkloadSelectors,
 		},
 	}
 }

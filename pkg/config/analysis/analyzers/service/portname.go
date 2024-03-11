@@ -27,6 +27,7 @@ import (
 	configKube "istio.io/istio/pkg/config/kube"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // PortNameAnalyzer checks the port name of the service
@@ -41,6 +42,10 @@ func (s *PortNameAnalyzer) Metadata() analysis.Metadata {
 		Description: "Checks the port names associated with each service",
 		Inputs: []config.GroupVersionKind{
 			gvk.Service,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.PortNameIsNotUnderNamingConvention,
+			msg.ExternalNameServiceTypeInvalidPortName,
 		},
 	}
 }

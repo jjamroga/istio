@@ -24,6 +24,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 // DestinationRuleAnalyzer checks the destination rules associated with each virtual service
@@ -39,6 +40,9 @@ func (d *DestinationRuleAnalyzer) Metadata() analysis.Metadata {
 		Inputs: []config.GroupVersionKind{
 			gvk.VirtualService,
 			gvk.DestinationRule,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.ReferencedResourceNotFound,
 		},
 	}
 }

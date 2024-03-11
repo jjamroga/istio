@@ -24,6 +24,7 @@ import (
 	"istio.io/istio/pkg/config/analysis/msg"
 	"istio.io/istio/pkg/config/resource"
 	"istio.io/istio/pkg/config/schema/gvk"
+	"istio.io/istio/pkg/config/analysis/diag"
 )
 
 type ApplicationUIDAnalyzer struct{}
@@ -41,6 +42,9 @@ func (appUID *ApplicationUIDAnalyzer) Metadata() analysis.Metadata {
 		Inputs: []config.GroupVersionKind{
 			gvk.Pod,
 			gvk.Deployment,
+		},
+		MessageTypes: []*diag.MessageType{
+			msg.InvalidApplicationUID,
 		},
 	}
 }
